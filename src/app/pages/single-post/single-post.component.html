@@ -1,0 +1,56 @@
+<div
+  *ngIf="post"
+  class="px-6"
+>
+  <div class="flex justify-end items-center gap-4 mb-6">
+    <app-button
+      (click)="delete()"
+      styleType="danger"
+    >Удалить
+    </app-button>
+    <app-button
+      (click)="modalService.open()"
+      styleType="secondary"
+    >Изменить
+    </app-button>
+  </div>
+
+  <div class="flex justify-between items-center mb-4 text-neutral-600 text-lg">
+    <div class="flex items-center">
+      <fa-icon
+        [icon]="faUser"
+        class="mr-2"
+      ></fa-icon>
+      {{ post.author || 'Нет автора' }}
+    </div>
+    <div class="flex items-center gap-4">
+      <div class="flex items-center">
+        <fa-icon
+          [icon]="faCalendar"
+          class="mr-2"
+        ></fa-icon>
+        {{ post.createdAt | date: 'd MMM yyyy, H:mm' }}
+      </div>
+      <div *ngIf="post.createdAt !== post.updatedAt">Изменено {{ post.updatedAt | date: 'd MMM yyyy, H:mm' }}</div>
+    </div>
+  </div>
+  <div
+    [style.background-image]="post.image ? 'url('+ post.image + ')' : ''"
+    class="relative flex items-end h-[200px] px-6 py-4 rounded-lg bg-no-repeat bg-cover bg-gradient-to-bl from-blue-300 to-blue-600 text-4xl text-white font-bold mb-4"
+  >
+    <div
+      *ngIf="post.image"
+      class="absolute inset-0 bg-gradient-to-bl from-blue-300/30 to-blue-600/30 rounded-lg"
+    ></div>
+    <div class="z-50">{{ post.title }}</div>
+  </div>
+
+  <div class="prose-xl whitespace-pre-line">{{ post.body }}</div>
+
+  <app-modal
+    *ngIf="modalService.isVisible$ | async"
+    title="Изменение поста"
+  >
+    <app-update-post [post]="post"></app-update-post>
+  </app-modal>
+</div>

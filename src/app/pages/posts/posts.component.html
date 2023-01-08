@@ -1,0 +1,46 @@
+<div class="px-6">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-4xl font-semibold text-blue-600">Посты</h1>
+    <app-button
+      (click)="modalService.open()"
+      [icon]="faPlus"
+      type="primary"
+    >Создать
+    </app-button>
+  </div>
+
+  <div class="mb-6">
+    <input
+      [(ngModel)]="search"
+      class="w-full rounded-lg border-neutral-300"
+      placeholder="Отфильтровать посты"
+      type="search"
+    >
+  </div>
+
+  <div
+    *ngIf="isLoading"
+    class="flex justify-center items-center"
+  >
+    <app-spinner></app-spinner>
+  </div>
+
+  <div
+    *ngIf="postService.posts"
+    class="mb-8"
+  >
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <app-post
+        *ngFor="let post of postService.posts | filterPosts: search"
+        [post]="post"
+      ></app-post>
+    </div>
+  </div>
+
+  <app-modal
+    *ngIf="modalService.isVisible$ | async"
+    title="Создание поста"
+  >
+    <app-add-post></app-add-post>
+  </app-modal>
+</div>

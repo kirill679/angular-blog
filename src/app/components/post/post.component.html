@@ -1,0 +1,31 @@
+<div class="rounded-lg border border-neutral-300 px-6 py-4">
+  <img
+    *ngIf="post.image; else imagePlaceholder"
+    [alt]="post.title"
+    [src]="post.image"
+    class="w-full rounded-lg h-36 object-cover mb-4"
+  >
+
+  <ng-template #imagePlaceholder>
+    <div class="rounded-lg h-36 bg-gradient-to-bl from-blue-300 to-blue-600 text-4xl mb-4"></div>
+  </ng-template>
+
+  <a
+    [routerLink]="[post.id]"
+    class="text-lg font-bold text-blue-600 line-clamp-1"
+  >{{ post.title || 'Пост' }}</a>
+
+  <div class="mb-2 text-neutral-600 line-clamp-1">{{ post.body }}</div>
+
+  <div class="flex justify-between items-center gap-2">
+    <div>{{ post.createdAt | date: 'shortDate' }}</div>
+
+    <div
+      *ngIf="post.author"
+      class="flex items-center gap-2"
+    >
+      <fa-icon [icon]="faUser"></fa-icon>
+      <div class="line-clamp-1">{{ post.author}}</div>
+    </div>
+  </div>
+</div>

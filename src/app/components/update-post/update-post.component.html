@@ -1,0 +1,88 @@
+<form
+  (ngSubmit)="submit()"
+  [formGroup]="form"
+  class="flex flex-col gap-4"
+>
+  <div class="flex flex-col">
+    <label
+      class="mb-2"
+      for="title"
+    >Название поста</label>
+    <input
+      class="rounded-lg border-neutral-400"
+      formControlName="title"
+      id="title"
+      type="text"
+    >
+    <div
+      *ngIf="title.errors?.required && title.touched"
+      class="text-red-400 mt-2"
+    >Пожалуйста, заполните поле.
+    </div>
+    <div
+      *ngIf="title.errors?.minlength && title.touched"
+      class="text-red-400 mt-2"
+    >Название должно быть не короче 6 символов.
+    </div>
+  </div>
+
+  <div class="flex flex-col">
+    <label
+      class="mb-2"
+      for="body"
+    >Содержимое поста</label>
+    <textarea
+      class="rounded-lg border-neutral-400"
+      formControlName="body"
+      id="body"
+    ></textarea>
+    <div
+      *ngIf="body.errors?.required && body.touched"
+      class="text-red-400 mt-2"
+    >Пожалуйста, заполните поле.
+    </div>
+    <div
+      *ngIf="body.errors?.minlength && body.touched"
+      class="text-red-400 mt-2"
+    >Содержимое должно быть не короче 10 символов.
+    </div>
+  </div>
+
+  <div class="flex flex-col">
+    <label
+      class="mb-2"
+      for="image"
+    >Изображение</label>
+    <input
+      class="rounded-lg border-neutral-400"
+      formControlName="image"
+      id="image"
+      type="text"
+    >
+  </div>
+
+  <div class="flex flex-col">
+    <label
+      class="mb-2"
+      for="author"
+    >Автор</label>
+    <input
+      class="rounded-lg border-neutral-400"
+      formControlName="author"
+      id="author"
+      type="text"
+    >
+    <div
+      *ngIf="author.errors?.required && author.touched"
+      class="text-red-400 mt-2"
+    >Пожалуйста, введите имя автора.
+    </div>
+  </div>
+
+  <app-button
+    [disabled]="!form.valid"
+    class="mt-6"
+    type="submit"
+  >Сохранить
+  </app-button>
+</form>
